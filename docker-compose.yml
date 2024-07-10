@@ -1,0 +1,23 @@
+version: "3"
+
+services:
+  laravel-api:
+    build:
+      context: .
+    container_name: laravel-api
+    restart: always
+    ports:
+      - "81:80"
+      - "8001:8000"
+    volumes:
+      - ./:/var/www/html/
+    networks:
+      - laravel
+      - shared_mysql
+
+networks:
+  laravel:
+    driver: bridge
+  shared_mysql:
+    external: true
+    name: shared_mysql
