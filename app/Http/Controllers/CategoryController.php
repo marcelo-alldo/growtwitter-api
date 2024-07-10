@@ -15,7 +15,6 @@ class CategoryController extends Controller
     {
         $params = collect($request->query());
         $query = Category::query();
-        //teste de commit
 
         if($params->get('enable') === "0"){
             $query->notEnable();
