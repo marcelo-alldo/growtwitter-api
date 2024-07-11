@@ -8,9 +8,7 @@ use Illuminate\Support\Facades\Auth;
 
 class LikeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
         $query = Like::query();
@@ -18,9 +16,7 @@ class LikeController extends Controller
         return response()->json(['success'=> true, 'data' => $query->get()]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+
     public function store(Request $request)
     {
         try {
@@ -30,10 +26,12 @@ class LikeController extends Controller
                 'postId' => 'required'
             ]);
 
-            if (Like::where('postId', $request->postId)->where('userId', $user->id)->first()) {
-                return response()->json(['success' => false, 'msg' => 'Curtida já realizada.'], 400);
-            }
+            $existingLike = Like::where('postId', $request->postId)->where('userId', $user->id)->first();
 
+            if ($existingLike) {
+                $existingLike->delete();
+                return response()->json(['success' => true, 'msg' => "Curtida removida"], 200);
+            }
 
             $like = Like::create([
                 "postId" => $request->postId,
@@ -47,9 +45,7 @@ class LikeController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     */
+
     public function show(int $id)
     {
         try {
@@ -60,28 +56,14 @@ class LikeController extends Controller
         }
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+
     public function update(Request $request, Like $like)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(int $id)
     {
-        try {
-            $like = Like::findOrFail($id);
-
-            $like->delete();
-
-            return response()->json(['success' => true, 'msg' => "Curtida deletada com sucesso"], 200);
-
-        } catch (\Throwable $th) {
-            return response()->json(['success' => false, 'msg' => "Curtida não deletada"], 404);
-        }
+        //
     }
 }
