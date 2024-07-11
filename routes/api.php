@@ -19,11 +19,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::resource('/users', UserController::class);
+Route::post('/users', [UserController::class, 'store']);
 
-Route::resource('/login', AuthController::class);
+Route::post('/login', [AuthController::class, 'store']);
 
 Route::middleware('auth:sanctum')->group(function (){
+    Route::apiResource('/users', UserController::class )-> except('store');
+    Route::apiResource('/login', AuthController::class)-> except('store');
     Route::resource('/posts', PostController::class);
     Route::apiResource('/likes', LikeController::class);
     Route::get('/reports/user', [ReportController::class, 'user']);

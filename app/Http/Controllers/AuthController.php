@@ -68,6 +68,6 @@ class AuthController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+
     }
 }
