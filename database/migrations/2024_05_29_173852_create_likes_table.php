@@ -9,7 +9,6 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    // TODO - Commit test
     public function up(): void
     {
         Schema::create('likes', function (Blueprint $table) {
