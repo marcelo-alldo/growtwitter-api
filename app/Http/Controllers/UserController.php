@@ -13,9 +13,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        $user = User::all();
-
-        return response()->json(['success' => 'true', 'msg' => 'Usuários mostrados com sucesso', 'data' => $user]);
+            $user = User::with('posts')->findOrFail(auth()->user()->id);
+            return response()->json(['success' => 'true', 'msg' => 'Usuário autenticado', 'data' => $user]);
     }
 
     /**
