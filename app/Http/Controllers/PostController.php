@@ -11,9 +11,9 @@ class PostController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index()
     {
-        $posts = Post::all();
+        $posts = Post::with(['user', 'likes'])->withCount('likes')->get();
         return response()->json(['success' => true, 'data' => $posts]);
     }
 
