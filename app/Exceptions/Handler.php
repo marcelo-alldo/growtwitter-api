@@ -23,8 +23,11 @@ class Handler extends ExceptionHandler
      */
     public function register(): void
     {
-        $this->reportable(function (Throwable $e) {
-            //
+        $this->renderable(function (AvatarStoreFailException $e, $request) {
+            return response()->json([
+                'success' => 'false',
+                'msg' => $e->getMessage()
+            ], 500);
         });
     }
 }
