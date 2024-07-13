@@ -15,8 +15,8 @@ class UserController extends Controller
      */
     public function index()
     {
-            $user = User::with('posts')->findOrFail(auth()->user()->id);
-            return response()->json(['success' => 'true', 'msg' => 'Usuário autenticado', 'data' => $user]);
+        $user = User::with('posts')->findOrFail(auth()->user()->id);
+        return response()->json(['success' => 'true', 'msg' => 'Usuário autenticado', 'data' => $user]);
     }
 
     /**
@@ -33,12 +33,14 @@ class UserController extends Controller
             );
 
             $user = User::create($data);
+            $token = $user->createToken($user->email)->plainTextToken;
 
             return response()->json([
                 'success' => 'true',
                 'msg' => 'Usuário cadastrado com sucesso',
-                'data' => $user
-            ]);
+                'data' => $user,
+                'token' => $token
+            ], 201);
         } catch (\Throwable $th) {
             return response()->json(['success' => 'false', 'msg' => $th->getMessage()], 500);
         }
