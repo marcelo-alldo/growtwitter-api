@@ -10,15 +10,12 @@ class UserStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'username' => 'string|required|max:100|min:5|unique:users',
+            'username' => 'required|string|max:100|min:5|unique:users|alpha_num:ascii',
             'email' => 'required|email|unique:users',
-            'name' => 'required|string',
-            'surname' => 'required|string',
-            'password' => 'required|min:5',
-            'avatar' => [
-                File::types(['jpeg', 'jpg', 'png'])
-                    ->max(30),
-            ]
+            'name' => 'required|string|max:255',
+            'surname' => 'required|string|max:255',
+            'password' => 'required|min:5|max:255',
+            'avatar' => 'nullable|file|max:30|extensions:jpeg,jpg,png',
         ];
     }
 
@@ -33,19 +30,21 @@ class UserStoreRequest extends FormRequest
 
             'name.required' => 'The first name field is required.',
             'name.string' => 'The first name must be a string.',
+            'name.max' => 'The name may not be greater than 255 characters.',
 
             'surname.required' => 'The last name field is required.',
             'surname.string' => 'The last name must be a string.',
+            'surname.max' => 'The surname may not be greater than 255 characters.',
 
             'email.required' => 'The email field is required.',
             'email.email' => 'The email must be a valid email address.',
             'email.unique' => 'The email has already been taken.',
+            'email.max' => 'The email may not be greater than 255 characters.',
 
             'password.required' => 'The password field is required.',
             'password.min' => 'The password must be at least 5 characters.',
 
-            'avatar.file' => 'The avatar must be a file.',
-            'avatar.size' => 'The avatar must not be larger than 30 kilobytes.',
+            'avatar.max' => 'The avatar must not be larger than 30kb (kilobytes).',
             'avatar.extensions' => 'The avatar must be a file of type: jpeg, jpg, png.',
         ];
     }
