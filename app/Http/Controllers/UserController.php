@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserStoreRequest;
 use App\Models\User;
+use App\Services\AvatarService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -13,37 +15,34 @@ class UserController extends Controller
      */
     public function index()
     {
-        $user = User::all();
-
-        return response()->json(['success' => 'true', 'msg' => 'Usuários mostrados com sucesso', 'data' => $user]);
+        $user = User::with('posts')->findOrFail(auth()->user()->id);
+        return response()->json(['success' => 'true', 'msg' => 'Usuário autenticado', 'data' => $user]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(UserStoreRequest $request)
     {
         try {
-            $request->validate([
-                'name' => 'required',
-                'email' => 'required',
-                'password' => 'required',
-            ],
-            [
-                'required' => 'O campo :attribute é obrigatório!'
-            ]);
+            $data = $request->validated();
+            $avatarName = AvatarService::storeAvatar($data['avatar']);
+            $data['avatar_url'] = AvatarService::mountUserAvatarUrl(
+                $request->getSchemeAndHttpHost(),
+                $avatarName
+            );
 
-            $user = new User();
-            $user->name = $request->name;
-            $user->email = $request->email;
-            $user->password = Hash::make($request->password);
-            $user->save();
+            $user = User::create($data);
+            $token = $user->createToken($user->email)->plainTextToken;
 
-            return response()->json(['success' => 'true', 'msg' => 'Usuários cadastrados com sucesso', 'data' => $user]);
-
-
+            return response()->json([
+                'success' => 'true',
+                'msg' => 'Usuário cadastrado com sucesso',
+                'data' => $user,
+                'token' => $token
+            ], 201);
         } catch (\Throwable $th) {
-            return response()->json(['success' => 'false', 'msg' => $th->getMessage()]);
+            return response()->json(['success' => 'false', 'msg' => $th->getMessage()], 500);
         }
     }
 
@@ -55,7 +54,6 @@ class UserController extends Controller
         try {
 
             return response()->json(['success' => 'true', 'msg' => 'Usuário encontrado com sucesso', 'data' => User::findOrFail($id)]);
-
         } catch (\Throwable $th) {
 
             return response()->json(['success' => 'false', 'msg' => $th->getMessage()]);
@@ -71,20 +69,19 @@ class UserController extends Controller
 
             $user = User::findOrFail($id);
 
-            if($request->has('name')){
+            if ($request->has('name')) {
                 $user->name = $request->name;
             }
-            if($request->has('email')){
+            if ($request->has('email')) {
                 $user->email = $request->email;
             }
-            if($request->has('password')){
+            if ($request->has('password')) {
                 $user->password = Hash::make($request->password);
             }
 
             $user->save();
 
             return response()->json(['success' => 'true', 'msg' => 'Usuário alterado com sucesso', 'data' => $user]);
-
         } catch (\Throwable $th) {
             return response()->json(['success' => 'false', 'msg' => $th->getMessage()]);
         }
@@ -100,10 +97,8 @@ class UserController extends Controller
             $user->delete();
 
             return response()->json(['success' => 'true', 'msg' => 'Usuário deletado com sucesso', 'data' => $user]);
-
         } catch (\Throwable $th) {
             return response()->json(['success' => 'false', 'msg' => $th->getMessage()]);
         }
-
     }
 }
