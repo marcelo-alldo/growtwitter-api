@@ -5,7 +5,6 @@ use App\Http\Controllers\LikeController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\UserController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,11 +18,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::resource('/users', UserController::class);
+Route::post('/users', [UserController::class, 'store']);
 
-Route::resource('/login', AuthController::class);
+Route::post('/login', [AuthController::class, 'store']);
 
 Route::middleware('auth:sanctum')->group(function (){
+    Route::apiResource('/users', UserController::class )-> except('store');
     Route::delete('/logout', [AuthController::class, 'destroy']);
     Route::resource('/posts', PostController::class);
     Route::apiResource('/likes', LikeController::class);
