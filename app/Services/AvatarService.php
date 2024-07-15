@@ -26,6 +26,6 @@ class AvatarService
 
   public static function setFileName($file)
   {
-    return Str::random(32) . '.' . $file->extension();
+    return (string) Str::uuid() . '.' . $file->extension();
   }
 }
