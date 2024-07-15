@@ -66,8 +66,14 @@ class AuthController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request)
     {
-        //
+        try {
+            $request->user()->tokens()->delete();
+            return response()->json(['success' => true, 'msg' => "Logout feito com sucesso"], 200);
+
+        } catch (\Throwable $th) {
+            return response()->json(['success' => false, 'msg' => $th->getMessage()], 400);
+        }
     }
 }

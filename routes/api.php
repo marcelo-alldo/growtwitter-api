@@ -24,6 +24,7 @@ Route::resource('/users', UserController::class);
 Route::resource('/login', AuthController::class);
 
 Route::middleware('auth:sanctum')->group(function (){
+    Route::delete('/logout', [AuthController::class, 'destroy']);
     Route::resource('/posts', PostController::class);
     Route::apiResource('/likes', LikeController::class);
     Route::get('/reports/user', [ReportController::class, 'user']);

@@ -11,9 +11,9 @@ class PostController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index()
     {
-        $posts = Post::all();
+        $posts = Post::with(['user', 'likes'])->withCount('likes')->get();
         return response()->json(['success' => true, 'data' => $posts]);
     }
 
@@ -56,7 +56,7 @@ class PostController extends Controller
 
                 return response()->json(['success' => true, 'data' => $post]);
             } catch (\Throwable $th) {
-                return response()->json(['success' => false, 'msg' => $th->getMessage], 400);
+                return response()->json(['success' => false, 'msg' => $th->getMessage()], 400);
             }
         }
     }
@@ -81,7 +81,7 @@ class PostController extends Controller
             $post->save();
             return response()->json(['success' => true, 'msg' => 'Post editado com sucesso!', 'data' => $post]);
         } catch (\Throwable $th) {
-            return response()->json(['success' => false, 'msg' => $th->getMessage], 400);
+            return response()->json(['success' => false, 'msg' => $th->getMessage()], 400);
         }
     }
 
@@ -97,7 +97,7 @@ class PostController extends Controller
             $post->delete();
             return response()->json(['success' => true, 'msg' => 'Post nº ' . $id . ' excluído com sucesso!']);
         } catch (\Throwable $th) {
-            return response()->json(['success' => false, 'msg' => $th->getMessage], 400);
+            return response()->json(['success' => false, 'msg' => $th->getMessage()], 400);
         }
     }
 }
