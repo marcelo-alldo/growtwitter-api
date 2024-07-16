@@ -26,11 +26,13 @@ class UserController extends Controller
     {
         try {
             $data = $request->validated();
-            $avatarName = AvatarService::storeAvatar($data['avatar']);
-            $data['avatar_url'] = AvatarService::mountUserAvatarUrl(
-                $request->getSchemeAndHttpHost(),
-                $avatarName
-            );
+            if (isset($data['avatar'])) {
+                $avatarName = AvatarService::storeAvatar($data['avatar']);
+                $data['avatar_url'] = AvatarService::mountUserAvatarUrl(
+                    $request->getSchemeAndHttpHost(),
+                    $avatarName
+                );
+            }
 
             $user = User::create($data);
             $token = $user->createToken($user->email)->plainTextToken;
