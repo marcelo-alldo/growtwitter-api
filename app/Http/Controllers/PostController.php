@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -47,14 +48,14 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show()
     {
         {
             try {
+                $userId = auth()->user()->id;
+                $posts = Post::where('userId', $userId)->with(['user', 'likes'])->withCount('likes')->get();
 
-                $post = Post::findOrFail($id);
-
-                return response()->json(['success' => true, 'data' => $post]);
+                return response()->json(['success' => true, 'data' => $posts]);
             } catch (\Throwable $th) {
                 return response()->json(['success' => false, 'msg' => $th->getMessage()], 400);
             }
