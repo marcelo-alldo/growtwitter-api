@@ -16,7 +16,7 @@ class AvatarService
             Storage::disk('s3')->put($filePath, file_get_contents($avatar));
             return $newAvatarName;
         } catch (\Throwable $th) {
-            throw new AvatarStoreFailException("Fail to store avatar, {$th->getMessage()}");
+            throw new AvatarStoreFailException("Falha ao adicionar o avatar, {$th->getMessage()}");
         }
     }
 
