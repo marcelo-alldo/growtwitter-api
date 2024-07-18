@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UserStoreRequest;
@@ -10,28 +9,18 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         $user = User::with('posts')->findOrFail(auth()->user()->id);
         return response()->json(['success' => 'true', 'msg' => 'Usuário autenticado', 'data' => $user]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(UserStoreRequest $request)
     {
         try {
             $data = $request->validated();
             if (isset($data['avatar'])) {
-                $avatarName = AvatarService::storeAvatar($data['avatar']);
-                $data['avatar_url'] = AvatarService::mountUserAvatarUrl(
-                    $request->getSchemeAndHttpHost(),
-                    $avatarName
-                );
+                $data['avatar_url'] = AvatarService::storeAvatar($data['avatar']);
             }
 
             $user = User::create($data);
@@ -48,27 +37,18 @@ class UserController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
         try {
-
             return response()->json(['success' => 'true', 'msg' => 'Usuário encontrado com sucesso', 'data' => User::findOrFail($id)]);
         } catch (\Throwable $th) {
-
             return response()->json(['success' => 'false', 'msg' => $th->getMessage()]);
         }
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
         try {
-
             $user = User::findOrFail($id);
 
             if ($request->has('name')) {
@@ -80,6 +60,9 @@ class UserController extends Controller
             if ($request->has('password')) {
                 $user->password = Hash::make($request->password);
             }
+            if ($request->has('avatar')) {
+                $user->avatar_url = AvatarService::storeAvatar($request->avatar);
+            }
 
             $user->save();
 
@@ -89,9 +72,6 @@ class UserController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
         try {
@@ -104,3 +84,5 @@ class UserController extends Controller
         }
     }
 }
+
+
