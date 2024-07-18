@@ -30,3 +30,6 @@ Route::middleware('auth:sanctum')->group(function (){
     Route::get('/reports/user', [ReportController::class, 'user']);
     Route::get('/postsbyuserauth', [PostController::class, 'show']);
 });
+
+
+//bom dia mundo
