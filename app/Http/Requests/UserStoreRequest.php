@@ -21,30 +21,31 @@ class UserStoreRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'username.required' => 'The username field is required.',
-            'username.string' => 'The username must be a string.',
-            'username.max' => 'The username may not be greater than 100 characters.',
-            'username.min' => 'The username must be at least 5 characters.',
-            'username.unique' => 'The username has already been taken.',
+            'username.required' => 'O campo nome de usuário é obrigatório.',
+            'username.string' => 'O nome de usuário deve ser uma string.',
+            'username.max' => 'O nome de usuário não pode ter mais de 100 caracteres.',
+            'username.min' => 'O nome de usuário deve ter pelo menos 5 caracteres.',
+            'username.unique' => 'Este usuário já está em uso.',
+            'username.alpha_num' => 'O nome de usuário só pode conter letras e números.',
 
-            'name.required' => 'The first name field is required.',
-            'name.string' => 'The first name must be a string.',
-            'name.max' => 'The name may not be greater than 255 characters.',
+            'name.required' => 'O campo nome é obrigatório.',
+            'name.string' => 'O campo nome deve ser uma string.',
+            'name.max' => 'O campo nome não pode ter mais de 255 caracteres.',
 
-            'surname.required' => 'The last name field is required.',
-            'surname.string' => 'The last name must be a string.',
-            'surname.max' => 'The surname may not be greater than 255 characters.',
+            'surname.required' => 'O campo sobrenome é obrigatório.',
+            'surname.string' => 'O campo sobrenome deve ser uma string.',
+            'surname.max' => 'O campo sobrenome não pode ter mais de 255 caracteres.',
 
-            'email.required' => 'The email field is required.',
-            'email.email' => 'The email must be a valid email address.',
-            'email.unique' => 'The email has already been taken.',
-            'email.max' => 'The email may not be greater than 255 characters.',
+            'email.required' => 'O campo email é obrigatório.',
+            'email.email' => 'O campo email deve ser um endereço de email válido.',
+            'email.unique' => 'Este email já está em uso.',
+            'email.max' => 'O campo email não pode ter mais de 255 caracteres.',
 
-            'password.required' => 'The password field is required.',
-            'password.min' => 'The password must be at least 5 characters.',
+            'password.required' => 'O campo senha é obrigatório.',
+            'password.min' => 'A senha deve ter pelo menos 5 caracteres.',
 
-            'avatar.max' => 'The avatar must not be larger than 30kb (kilobytes).',
-            'avatar.extensions' => 'The avatar must be a file of type: jpeg, jpg, png.',
+            'avatar.max' => 'O avatar não deve ter mais de 8mb (megabytes).',
+            'avatar.extensions' => 'O avatar deve ser um arquivo do tipo: jpeg, jpg, png.',
         ];
     }
 }
