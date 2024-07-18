@@ -28,4 +28,5 @@ Route::middleware('auth:sanctum')->group(function (){
     Route::resource('/posts', PostController::class);
     Route::apiResource('/likes', LikeController::class);
     Route::get('/reports/user', [ReportController::class, 'user']);
+    Route::get('/postsbyuserauth', [PostController::class, 'show']);
 });
