@@ -14,7 +14,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::with(['user', 'likes'])->withCount('likes')->get();
+        $posts = Post::with(['user', 'likes'])->withCount('likes')->orderBy('created_at', 'desc')->get();
         return response()->json(['success' => true, 'data' => $posts]);
     }
 
