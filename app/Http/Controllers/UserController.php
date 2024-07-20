@@ -40,7 +40,7 @@ class UserController extends Controller
     public function show(string $id)
     {
         try {
-            return response()->json(['success' => 'true', 'msg' => 'Usuário encontrado com sucesso', 'data' => User::findOrFail($id)]);
+            return response()->json(['success' => 'true', 'msg' => 'Usuário encontrado com sucesso', 'data' => User::with('posts')->findOrFail($id)]);
         } catch (\Throwable $th) {
             return response()->json(['success' => 'false', 'msg' => $th->getMessage()]);
         }
