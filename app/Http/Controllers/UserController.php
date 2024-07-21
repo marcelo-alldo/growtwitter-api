@@ -54,6 +54,12 @@ class UserController extends Controller
             if ($request->has('name')) {
                 $user->name = $request->name;
             }
+            if ($request->has('surname')) {
+                $user->surname = $request->surname;
+            }
+            if ($request->has('username')) {
+                $user->username = $request->username;
+            }
             if ($request->has('email')) {
                 $user->email = $request->email;
             }
