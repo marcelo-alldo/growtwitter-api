@@ -14,7 +14,7 @@ class UserStoreRequest extends FormRequest
             'name' => 'required|string|max:255',
             'surname' => 'required|string|max:255',
             'password' => 'required|min:5|max:255',
-            'avatar' => 'nullable|file|max:8000|extensions:jpeg,jpg,png',
+            'avatar_url' => 'required|string',
         ];
     }
 
@@ -44,8 +44,8 @@ class UserStoreRequest extends FormRequest
             'password.required' => 'O campo senha é obrigatório.',
             'password.min' => 'A senha deve ter pelo menos 5 caracteres.',
 
-            'avatar.max' => 'O avatar não deve ter mais de 8mb (megabytes).',
-            'avatar.extensions' => 'O avatar deve ser um arquivo do tipo: jpeg, jpg, png.',
+            'avatar_url.max' => 'O avatar não deve ter mais de 8mb (megabytes).',
+            'avatar_url.extensions' => 'O avatar deve ser um arquivo do tipo: jpeg, jpg, png.',
         ];
     }
 }

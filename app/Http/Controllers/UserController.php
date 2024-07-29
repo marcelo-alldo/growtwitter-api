@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UserStoreRequest;
@@ -19,12 +20,9 @@ class UserController extends Controller
     {
         try {
             $data = $request->validated();
-            if (isset($data['avatar'])) {
-                $data['avatar_url'] = AvatarService::storeAvatar($data['avatar']);
-            }
-
             $user = User::create($data);
             $token = $user->createToken($user->email)->plainTextToken;
+
 
             return response()->json([
                 'success' => 'true',
@@ -90,5 +88,3 @@ class UserController extends Controller
         }
     }
 }
-
-

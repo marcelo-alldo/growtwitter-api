@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use App\Models\User;
+use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -27,12 +28,14 @@ class PostController extends Controller
 
             $user = Auth::user();
 
-            $request->validate([
-                'content' => 'required'
-            ],
-            [
-                'required' => 'O campo :attribute é obrigatório.'
-            ]);
+            $request->validate(
+                [
+                    'content' => 'required'
+                ],
+                [
+                    'required' => 'O campo :attribute é obrigatório.'
+                ]
+            );
 
             $post = Post::create([
                 "userId" => $user->id,
@@ -49,8 +52,7 @@ class PostController extends Controller
      * Display the specified resource.
      */
     public function show()
-    {
-        {
+    { {
             try {
                 $userId = auth()->user()->id;
                 $posts = Post::where('userId', $userId)->with(['user', 'likes'])->withCount('likes')->get();
@@ -71,12 +73,14 @@ class PostController extends Controller
 
             $post = Post::findOrFail($id);
 
-            $request->validate([
-                'content' => 'required'
-            ],
-            [
-                'required' => 'Faltou :attribute'
-            ]);
+            $request->validate(
+                [
+                    'content' => 'required'
+                ],
+                [
+                    'required' => 'Faltou :attribute'
+                ]
+            );
 
             $post->content = $request->content;
             $post->save();
