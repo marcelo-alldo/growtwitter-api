@@ -64,8 +64,8 @@ class UserController extends Controller
             if ($request->has('password')) {
                 $user->password = Hash::make($request->password);
             }
-            if ($request->has('avatar')) {
-                $user->avatar_url = AvatarService::storeAvatar($request->avatar);
+            if ($request->has('avatar_url')) {
+                $user->avatar_url = $request->avatar_url;
             }
 
             $user->save();
