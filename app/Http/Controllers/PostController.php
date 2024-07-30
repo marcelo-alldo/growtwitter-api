@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
-use App\Models\User;
-use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -15,7 +13,11 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::with(['user', 'likes'])->withCount('likes')->orderBy('created_at', 'desc')->get();
+        $posts = Post::with(['user:id,username,name,avatar_url'])
+            ->withCount('likes')
+            ->latest()
+            ->get();
+
         return response()->json(['success' => true, 'data' => $posts]);
     }
 
@@ -55,7 +57,7 @@ class PostController extends Controller
     { {
             try {
                 $userId = auth()->user()->id;
-                $posts = Post::where('userId', $userId)->with(['user', 'likes'])->withCount('likes')->get();
+                $posts = Post::where('userId', $userId)->with(['user'])->withCount('likes')->get();
 
                 return response()->json(['success' => true, 'data' => $posts]);
             } catch (\Throwable $th) {
