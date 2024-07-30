@@ -14,7 +14,7 @@ class UserStoreRequest extends FormRequest
             'name' => 'required|string|max:255',
             'surname' => 'required|string|max:255',
             'password' => 'required|min:5|max:255',
-            'avatar_url' => 'required|string',
+            'avatar_url' => 'string|nullable',
         ];
     }
 

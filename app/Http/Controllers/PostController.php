@@ -13,7 +13,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::with(['user:id,username,name,avatar_url'])
+        $posts = Post::with(['user:id,username,name,avatar_url', 'likes'])
             ->withCount('likes')
             ->latest()
             ->get();
@@ -57,7 +57,7 @@ class PostController extends Controller
     { {
             try {
                 $userId = auth()->user()->id;
-                $posts = Post::where('userId', $userId)->with(['user'])->withCount('likes')->get();
+                $posts = Post::where('userId', $userId)->with(['user', 'likes'])->withCount('likes')->get();
 
                 return response()->json(['success' => true, 'data' => $posts]);
             } catch (\Throwable $th) {
