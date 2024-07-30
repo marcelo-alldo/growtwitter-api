@@ -34,13 +34,13 @@ class AuthController extends Controller
                 return response()->json(['success' => false, 'msg' => 'Verificar email ou senha.'], 401);
             }
 
+            $user->tokens()->delete();
             $token = $user->createToken($user->email)->plainTextToken;
 
             return response()->json(['success' => true, 'msg' => "Login efetuado com sucesso", 'data' => [
                 'user' => $user,
                 'token' => $token
             ]], 200);
-
         } catch (\Throwable $th) {
             Log::error('Erro ao fazer login', ['error' => $th->getMessage()]);
             return response()->json(['success' => false, 'msg' => "Erro ao logar"], 400);
@@ -71,7 +71,6 @@ class AuthController extends Controller
         try {
             $request->user()->tokens()->delete();
             return response()->json(['success' => true, 'msg' => "Logout feito com sucesso"], 200);
-
         } catch (\Throwable $th) {
             return response()->json(['success' => false, 'msg' => $th->getMessage()], 400);
         }
