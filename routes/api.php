@@ -14,5 +14,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/logout', [AuthController::class, 'destroy']);
     Route::resource('/posts', PostController::class);
     Route::apiResource('/likes', LikeController::class);
+    Route::get('/postsbyuserauth', [PostController::class, 'show']);
 });
 
+
+//Bom dia mundo, bora tomar um cafézin?
