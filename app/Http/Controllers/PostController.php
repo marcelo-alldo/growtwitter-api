@@ -53,16 +53,12 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show()
-    { {
-            try {
-                $userId = auth()->user()->id;
-                $posts = Post::where('userId', $userId)->with(['user', 'likes'])->withCount('likes')->get();
-
-                return response()->json(['success' => true, 'data' => $posts]);
-            } catch (\Throwable $th) {
-                return response()->json(['success' => false, 'msg' => $th->getMessage()], 400);
-            }
+    public function show(string $id)
+    {
+        try {
+            return response()->json(['success' => 'true', 'msg' => 'Post encontrado com sucesso', 'data' => Post::with('user', 'likes')->findOrFail($id)]);
+        } catch (\Throwable $th) {
+            return response()->json(['success' => 'false', 'msg' => $th->getMessage()]);
         }
     }
 
