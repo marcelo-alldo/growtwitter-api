@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Validation\UnauthorizedException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -28,6 +29,13 @@ class Handler extends ExceptionHandler
                 'success' => 'false',
                 'msg' => $e->getMessage()
             ], 500);
+        });
+
+        $this->renderable(function (UnauthorizedUserActionException $e, $request) {
+            return response()->json([
+                'success' => 'false',
+                "message" => "Ação não é autorizada para este usuário.",
+            ], 403);
         });
     }
 }
