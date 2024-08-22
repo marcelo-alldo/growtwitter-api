@@ -1,3 +1,4 @@
+
 <a name="get-user"></a>
 
 # Get User
@@ -55,6 +56,7 @@ Código `400`
     "msg": "string",
 }
 ```
+---
 
 <a name="register"></a>
 
@@ -118,14 +120,128 @@ Código `400`
 }
 ```
 
-<a name="Update"></a>
+---
+
+<a name="update"></a>
 
 # Update
 
-Teste
+### Endpoint (Atualizar um User)
 
-<a name="Delete"></a>
+Atualiza os dados de um usuário.
+
+>
+
+| Method |     URL      | Headers |
+| :----: | :----------: | :-----: |
+|  PUT | `/api/users` |    Auth   |
+
+#### Body Rules
+
+```json
+{
+    "name": "string",
+    "surname": "string",
+    "username": "string",
+    "avatar_url": "string|optional"
+}
+```
+
+### Responses
+
+> {success.fa-check-circle-o} Sucesso
+
+Código `200`
+
+```json
+{
+    "success": "boolean",
+    "msg": "string",
+    "data": {
+        "id": "number",
+        "name": "string",
+        "surname": "string",
+        "email": "string",
+        "username": "string",
+        "avatar_url": "string",
+        "email_verified_at": "null",
+        "created_at": "date|string",
+        "updated_at": "date|string"
+    }
+}
+```
+
+> {danger.fa-check-circle-o} Erro ao atualizar User
+
+Código `400`
+
+```json
+{
+    "success": "boolean",
+    "msg": "string",
+}
+```
+---
+
+<a name="delete"></a>
 
 # Delete
 
-Teste
+### Endpoint (Deleta um usuário)
+
+Deleta um usuário do sistema.
+
+>
+
+| Method |     URL      | Headers |
+| :----: | :----------: | :-----: |
+|  DELETE | `/api/users` |    Auth   |
+
+#### Body Rules
+
+```json
+{
+    "name": "string",
+    "surname": "string",
+    "username": "string",
+    "avatar_url": "string|optional"
+}
+```
+
+### Responses
+
+
+> {success.fa-check-circle-o} Sucesso
+
+Código `200`
+
+```json
+{
+    "success": "boolean",
+    "msg": "string",
+    "data": {
+        "id": "number",
+        "name": "string",
+        "surname": "string",
+        "email": "string",
+        "username": "string",
+        "avatar_url": "string",
+        "email_verified_at": "null",
+        "created_at": "date|string",
+        "updated_at": "date|string"
+    }
+}
+```
+
+> {danger.fa-check-circle-o} Erro ao deletar User
+
+Código `400`
+
+```json
+{
+    "success": "boolean",
+    "msg": "string",
+}
+```
+
+
