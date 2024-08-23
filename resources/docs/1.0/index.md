@@ -1,15 +1,16 @@
-- ## Get Started
+-   ## Get Started
 
-  - [Overview](/{{route}}/{{version}}/overview)
-  - [Instalation](/{{route}}/{{version}}/instalation)
+    -   [Overview](/{{route}}/{{version}}/overview)
+    -   [Instalation](/{{route}}/{{version}}/instalation)
 
-- ## Auth
+-   ## Auth
 
-  - [Login](/{{route}}/{{version}}/Users)
+    -   [Login](/{{route}}/{{version}}/auth#login)
+    -   [Logout](/{{route}}/{{version}}/auth#logout)
 
-- ## Users
+-   ## Users
 
-  - [Get user](/{{route}}/{{version}}/Users#get-user)
-  - [Register](/{{route}}/{{version}}/Users#register)
-  - [Update](/{{route}}/{{version}}/Users#update)
-  - [Delete](/{{route}}/{{version}}/Users#delete)
+    -   [Get user](/{{route}}/{{version}}/Users#get-user)
+    -   [Register](/{{route}}/{{version}}/Users#register)
+    -   [Update](/{{route}}/{{version}}/Users#update)
+    -   [Delete](/{{route}}/{{version}}/Users#delete)
