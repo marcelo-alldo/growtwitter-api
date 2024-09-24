@@ -8,9 +8,6 @@ use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         $posts = Post::with(['user:id,username,name,avatar_url', 'likes'])
@@ -20,10 +17,6 @@ class PostController extends Controller
 
         return response()->json(['success' => true, 'data' => $posts]);
     }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         try {
@@ -44,15 +37,11 @@ class PostController extends Controller
                 "content" => $request->content
             ]);
 
-            return response()->json(['success' => true, 'msg' => 'Post cadastrado com sucesso!', 'data' => $post]);
+            return response()->json(['success' => true, 'msg' => 'Post cadastrado com sucesso!', 'data' => $post], 201);
         } catch (\Throwable $th) {
-            return response()->json(['success' => true, 'msg' => $th->getMessage()], 400);
+            return response()->json(['success' => false, 'msg' => $th->getMessage()], 422);
         }
     }
-
-    /**
-     * Display the specified resource.
-     */
     public function show()
     { {
             try {
@@ -65,10 +54,6 @@ class PostController extends Controller
             }
         }
     }
-
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
         try {
@@ -91,10 +76,6 @@ class PostController extends Controller
             return response()->json(['success' => false, 'msg' => $th->getMessage()], 400);
         }
     }
-
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
         try {
