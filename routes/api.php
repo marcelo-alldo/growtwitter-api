@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\FollowerController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
@@ -14,4 +15,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/logout', [AuthController::class, 'destroy']);
     Route::resource('/posts', PostController::class);
     Route::apiResource('/likes', LikeController::class);
+    Route::apiResource('/follow', FollowerController::class);
 });
