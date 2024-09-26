@@ -4,8 +4,9 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\FollowerController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\RetweetController;
 use App\Http\Controllers\UserController;
-use App\Models\Retweet;
+
 use Illuminate\Support\Facades\Route;
 
 Route::post('/users', [UserController::class, 'store']);
@@ -17,5 +18,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::resource('/posts', PostController::class);
     Route::apiResource('/likes', LikeController::class);
     Route::apiResource('/follow', FollowerController::class);
-    Route::apiResource('/retweet', Retweet::class);
+    Route::apiResource('/retweet', RetweetController::class);
 });
