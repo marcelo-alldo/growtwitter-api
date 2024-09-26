@@ -47,8 +47,8 @@ class FollowerController extends Controller
     {
         $osQueEuSigo = Follower::with('follower', 'following')->where('followerId', $id)->count();
         $quemSegueEle = Follower::with('following', 'follower')->where('followingId', $id)->count();
-        $osQueEuSigoData = Follower::with('follower', 'following')->where('followerId', $id)->get();
-        $quemSegueEleData = Follower::with('following', 'follower')->where('followingId', $id)->get();
+        $osQueEuSigoData = Follower::with('follower', 'following', 'posts')->where('followerId', $id)->get();
+        $quemSegueEleData = Follower::with('following', 'follower', 'posts')->where('followingId', $id)->get();
 
         return response()->json(['success' => true, 'msg' => "Lista de quem eu sigo e me segue", 'followings' => $osQueEuSigo, 'followers' => $quemSegueEle, 'followingsData' => $osQueEuSigoData, 'followersData' => $quemSegueEleData], 200);
     }

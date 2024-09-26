@@ -18,7 +18,7 @@ class PostController extends Controller
     {
 
         $posts = Cache::remember($this->cacheKey, $this->cacheDuration, function () {
-            return Post::with(['user:id,username,name,avatar_url', 'likes'])
+            return Post::with(['user:id,username,name,avatar_url', 'likes', 'retweets'])
                 ->withCount('likes')
                 ->latest()
                 ->get();
@@ -58,7 +58,7 @@ class PostController extends Controller
     public function show(int $id)
     {
         try {
-            $posts = Post::with(['user:id,username,name,avatar_url', 'likes'])
+            $posts = Post::with(['user:id,username,name,avatar_url', 'likes', 'retweets'])
                 ->withCount('likes')
                 ->where('userId', $id)
                 ->latest()

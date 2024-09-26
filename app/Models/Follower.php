@@ -23,4 +23,8 @@ class Follower extends Model
     {
         return $this->belongsTo(User::class, 'followerId', 'id');
     }
+    public function posts()
+    {
+        return $this->hasMany(Post::class, 'userId', 'followingId');
+    }
 }
