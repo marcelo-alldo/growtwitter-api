@@ -24,18 +24,18 @@ class UserController extends Controller
                 'email' => 'required|email|unique:users',
                 'name' => 'required|string|max:255',
                 'surname' => 'required|string|max:255',
-                'password' => 'required|min:5|max:255',
+                'password' => ['required', 'min:6', 'max:225', 'regex:/^[A-Za-z0-9@!\-_#]+$/'],
                 'avatar_url' => 'string|nullable',
             ], [
                 'username.required' => 'O campo nome de usuário é obrigatório.',
-                'username.string' => 'O nome de usuário deve ser uma string.',
+                'username.string' => 'O nome de usuário só pode conter letras',
                 'username.max' => 'O nome de usuário não pode ter mais de 30 caracteres.',
                 'username.min' => 'O nome de usuário deve ter pelo menos 5 caracteres.',
                 'username.unique' => 'Este usuário já está em uso.',
                 'username.regex' => 'O nome de usuário só pode conter letras, números e underlines.',
 
                 'name.required' => 'O campo nome é obrigatório.',
-                'name.string' => 'O campo nome deve ser uma string.',
+                'name.string' => 'O campo nome deve conter apenas letras.',
                 'name.max' => 'O campo nome não pode ter mais de 255 caracteres.',
 
                 'surname.required' => 'O campo sobrenome é obrigatório.',
@@ -48,7 +48,8 @@ class UserController extends Controller
                 'email.max' => 'O campo email não pode ter mais de 255 caracteres.',
 
                 'password.required' => 'O campo senha é obrigatório.',
-                'password.min' => 'A senha deve ter pelo menos 5 caracteres.',
+                'password.min' => 'A senha deve ter pelo menos 7 caracteres.',
+                'password.regex' => 'Sua senha deve ter algum dos caracteres especiais "#, -, !, _, @" ',
 
                 'avatar_url.string' => 'Avatar deve ser do tipo string.',
             ]);
