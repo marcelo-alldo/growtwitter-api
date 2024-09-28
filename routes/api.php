@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\FollowerController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\PostController;
@@ -19,4 +20,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('/likes', LikeController::class);
     Route::apiResource('/follow', FollowerController::class);
     Route::apiResource('/retweet', RetweetController::class);
+    Route::apiResource('/comment', CommentController::class);
 });
