@@ -4,22 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 
 class AuthController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    public function index() {}
+
+
     public function store(Request $request)
     {
         try {
@@ -47,25 +41,28 @@ class AuthController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+
+    public function show(string $token)
     {
-        //
+        try {
+            $authToken = DB::table("personal_acess_tokens")->where('token', $token);
+            if ($authToken) {
+                return true;
+            }
+
+            return false;
+        } catch (\Throwable $e) {
+            return response()->json(["msg" => "Falha ao realizar a operação de validação de token", "error" => $e->getMessage()]);
+        }
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+
     public function update(Request $request, string $id)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+
     public function destroy(Request $request)
     {
         try {
