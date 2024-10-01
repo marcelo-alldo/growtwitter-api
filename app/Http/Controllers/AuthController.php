@@ -47,12 +47,10 @@ class AuthController extends Controller
         try {
             $authToken = DB::table("personal_access_tokens")->where('token', $token)->first();
             if ($authToken) {
-                return true;
+                return response()->json(["success" => true, "msg" => "Validação de token"], 200);
             }
-
-            return false;
         } catch (\Throwable $e) {
-            return response()->json(["msg" => "Falha ao realizar a operação de validação de token", "error" => $e->getMessage()]);
+            return response()->json(["success" => false, "msg" => "Falha ao realizar a operação de validação de token", "error" => $e->getMessage()], 401);
         }
     }
 
