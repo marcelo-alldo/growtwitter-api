@@ -23,7 +23,8 @@ class User extends Authenticatable
         'username',
         'email',
         'password',
-        'avatar_url'
+        'avatar_url',
+
     ];
 
     /**
@@ -46,17 +47,14 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function posts() {
+    public function posts()
+    {
         return $this->hasMany(Post::class, 'userId');
     }
 
-    public function likes() {
+    public function likes()
+    {
         return $this->hasMany(Like::class, 'userId');
     }
 
-    public static function getUserToken($token){
-
-        $name = DB::table('personal_access_tokens as pat')->select(['*'])->join('users as u', 'name', '=', 'users.email')->where('pat.token' == $token)->orderByDesc('pat.id')->limit(1);
-        return $name;
-    }
 }

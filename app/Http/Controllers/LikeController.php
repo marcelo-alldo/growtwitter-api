@@ -13,7 +13,7 @@ class LikeController extends Controller
     {
         $query = Like::query();
 
-        return response()->json(['success'=> true, 'data' => $query->get()]);
+        return response()->json(['success' => true, 'data' => $query->get()]);
     }
 
 
@@ -41,7 +41,7 @@ class LikeController extends Controller
             return response()->json(['success' => true, 'msg' => "Curtida aplicada", 'data' => $like], 200);
 
         } catch (\Throwable $th) {
-            return response()->json(['success' => false, 'msg' => "Curtida não aplicada"], 400);
+            return response()->json(['success' => false, 'msg' => "Curtida não aplicada"], 422);
         }
     }
 
@@ -50,7 +50,7 @@ class LikeController extends Controller
     {
         try {
             $like = Like::findOrFail($id);
-            return response()->json(['success' => true, 'msg' => 'Curtida encontrada.','data' => $like], 200);
+            return response()->json(['success' => true, 'msg' => 'Curtida encontrada.', 'data' => $like], 200);
         } catch (\Exception $e) {
             return response()->json(['success' => false, 'msg' => 'Curtida não encontrada', 'data' => $e->getMessage()], 500);
         }

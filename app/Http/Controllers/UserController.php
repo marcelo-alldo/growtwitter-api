@@ -16,14 +16,46 @@ class UserController extends Controller
         $user = User::with('posts')->findOrFail(auth()->user()->id);
         return response()->json(['success' => 'true', 'msg' => 'Usuário autenticado', 'data' => $user]);
     }
-
-    public function store(UserStoreRequest $request)
+    public function store(Request $request)
     {
         try {
-            $data = $request->validated();
+            $data = $request->validate([
+                'username' => ['required', 'string', 'max:30', 'min:5', 'unique:users', 'regex:/^[\w]+$/'],
+                'email' => 'required|email|unique:users',
+                'name' => 'required|string|max:255',
+                'surname' => 'required|string|max:255',
+                'password' => ['required', 'min:6', 'max:225', 'regex:/^[A-Za-z0-9@!\-_#]+$/'],
+                'avatar_url' => 'string|nullable',
+            ], [
+                'username.required' => 'O campo nome de usuário é obrigatório.',
+                'username.string' => 'O nome de usuário só pode conter letras',
+                'username.max' => 'O nome de usuário não pode ter mais de 30 caracteres.',
+                'username.min' => 'O nome de usuário deve ter pelo menos 5 caracteres.',
+                'username.unique' => 'Este usuário já está em uso.',
+                'username.regex' => 'O nome de usuário só pode conter letras, números e underlines.',
+
+                'name.required' => 'O campo nome é obrigatório.',
+                'name.string' => 'O campo nome deve conter apenas letras.',
+                'name.max' => 'O campo nome não pode ter mais de 255 caracteres.',
+
+                'surname.required' => 'O campo sobrenome é obrigatório.',
+                'surname.string' => 'O campo sobrenome deve ser uma string.',
+                'surname.max' => 'O campo sobrenome não pode ter mais de 255 caracteres.',
+
+                'email.required' => 'O campo email é obrigatório.',
+                'email.email' => 'O campo email deve ser um endereço de email válido.',
+                'email.unique' => 'Este email já está em uso.',
+                'email.max' => 'O campo email não pode ter mais de 255 caracteres.',
+
+                'password.required' => 'O campo senha é obrigatório.',
+                'password.min' => 'A senha deve ter pelo menos 7 caracteres.',
+                'password.regex' => 'Sua senha deve ter algum dos caracteres especiais "#, -, !, _, @" ',
+
+                'avatar_url.string' => 'Avatar deve ser do tipo string.',
+            ]);
+
             $user = User::create($data);
             $token = $user->createToken($user->email)->plainTextToken;
-
 
             return response()->json([
                 'success' => 'true',
@@ -32,7 +64,7 @@ class UserController extends Controller
                 'token' => $token
             ], 201);
         } catch (\Throwable $th) {
-            return response()->json(['success' => 'false', 'msg' => $th->getMessage()], 500);
+            return response()->json(['success' => 'false', 'msg' => $th->getMessage()], 422);
         }
     }
 
@@ -45,10 +77,42 @@ class UserController extends Controller
         }
     }
 
-    public function update(UserUpdateRequest $request, string $id)
+    public function update(Request $request, string $id)
     {
         try {
-            $request->validated();
+            $request->validate([
+                'username' => ['nullable', 'string', 'max:30', 'min:5', 'unique:users', 'regex:/^[\w]+$/'],
+                'email' => 'nullable|email|unique:users',
+                'name' => 'nullable|string|max:255',
+                'surname' => 'nullable|string|max:255',
+                'password' => 'nullable|min:5|max:255',
+                'avatar_url' => 'string|nullable',
+            ], [
+
+                'username.string' => 'O nome de usuário deve ser uma string.',
+                'username.max' => 'O nome de usuário não pode ter mais de 30 caracteres.',
+                'username.min' => 'O nome de usuário deve ter pelo menos 5 caracteres.',
+                'username.unique' => 'Este usuário já está em uso.',
+                'username.regex' => 'O nome de usuário só pode conter letras, números e underlines.',
+
+
+                'name.string' => 'O campo nome deve ser uma string.',
+                'name.max' => 'O campo nome não pode ter mais de 255 caracteres.',
+
+
+                'surname.string' => 'O campo sobrenome deve ser uma string.',
+                'surname.max' => 'O campo sobrenome não pode ter mais de 255 caracteres.',
+
+
+                'email.email' => 'O campo email deve ser um endereço de email válido.',
+                'email.unique' => 'Este email já está em uso.',
+                'email.max' => 'O campo email não pode ter mais de 255 caracteres.',
+
+
+                'password.min' => 'A senha deve ter pelo menos 5 caracteres.',
+
+                'avatar_url.string' => 'Avatar deve ser do tipo string.',
+            ]);
             $user = User::findOrFail($id);
 
             if ($request->has('name')) {
