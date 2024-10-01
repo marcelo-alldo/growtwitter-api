@@ -45,7 +45,7 @@ class AuthController extends Controller
     public function show(string $token)
     {
         try {
-            $authToken = DB::table("personal_acess_tokens")->where('token', $token);
+            $authToken = DB::table("personal_access_tokens")->where('token', $token)->first();
             if ($authToken) {
                 return true;
             }
