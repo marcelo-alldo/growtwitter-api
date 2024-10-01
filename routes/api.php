@@ -13,9 +13,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/users', [UserController::class, 'store']);
 Route::post('/login', [AuthController::class, 'store']);
+Route::get('/verifyToken', [AuthController::class, "show"]);
 Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('/users', UserController::class)->except('store');
-    Route::get('verifyToken', [AuthController::class, "show"]);
+
     Route::delete('/logout', [AuthController::class, "destroy"]);
     Route::resource('/posts', PostController::class);
     Route::apiResource('/likes', LikeController::class);
