@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/users', [UserController::class, 'store']);
 Route::post('/login', [AuthController::class, 'store']);
-Route::get('/token', [AuthController::class, 'show']);
+Route::get("/logout/{token}", [AuthController::class, 'show']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('/users', UserController::class)->except('store');
     Route::delete('/logout', [AuthController::class, 'destroy']);
