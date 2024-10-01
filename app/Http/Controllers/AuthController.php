@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 
@@ -42,19 +41,7 @@ class AuthController extends Controller
     }
 
 
-    public function show(string $token)
-    {
-        try {
-            $authToken = DB::table("personal_access_tokens")->where('token', $token)->first();
-            if ($authToken) {
-                return true;
-            }
-
-            return false;
-        } catch (\Throwable $e) {
-            return response()->json(["msg" => "Falha ao realizar a operação de validação de token", "error" => $e->getMessage()]);
-        }
-    }
+    public function show(string $token) {}
 
 
     public function update(Request $request, string $id)
