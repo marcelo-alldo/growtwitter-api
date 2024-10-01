@@ -30,6 +30,6 @@ class Post extends Model
 
     public function comments()
     {
-        return $this->hasMany(Comment::class, 'postId')->with('user');;
+        return $this->hasMany(Comment::class, 'postId')->with('user');
     }
 }
