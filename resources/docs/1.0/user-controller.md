@@ -2,6 +2,8 @@
 
 -   [**Cadastro**](#sign-up)
 -   [Criar conta `Request`](#request-register)
+-   [**Métodos Controller**](#get-users)
+-   [Pegar todos os Usuários](#get-user)
 -   [**Autenticação**](#auth)
 -   [Login `Request`](#request-login)
 
@@ -30,7 +32,7 @@ Para criar um novo usuário, enviar request conforme dados exemplificados abaixo
     "username": "required|string|max:30|min:5|unique:users|regex:/^[w]+$/",
     "email": "required|email|unique:users",
     "password": "required|max:255|min:6|regex:/^[A-Za-z0-9@!-_#]+$/",
-    "avatar_url": "string|nullable",
+    "avatar_url": "string|nullable"
 }
 ```
 
@@ -57,7 +59,7 @@ Código `201`
 }
 ```
 
-> {danger.fa-times-circle-o} E-mail em uso por outro usuário
+> {danger.fa-times-circle-o} E-mail ou Username em uso por outro usuário
 
 Código `422`
 
@@ -68,6 +70,66 @@ Código `422`
 }
 ```
 
+<a name="get-users" />
+
+## Pegar todos os usuários
+
+O GET de usuários é feito após o serviço de autenticação. Permitindo o cliente acessar seu usuário quando autenticado.
+
+<a name="get-user" />
+
+### Endpoint (Pegar usuários)
+
+Para criar um novo usuário, enviar request conforme dados exemplificados abaixo.
+
+| Method |   URI    | Headers |
+| :----: | :------: | :-----: |
+|  GET   | `/users` |  Auth  |
+
+### Responses
+
+> {success.fa-check-circle-o} Usuário autenticado com seus posts
+
+Código `201`
+
+```json
+{
+    "success": "boolean",
+    "msg": "string",
+    "data": {
+        "id": "number",
+        "name": "string",
+        "surname": "string",
+        "email": "string",
+        "username": "string",
+        "avatar_url": null,
+        "email_verified_at": null,
+        "created_at": "string|date",
+        "updated_at": "string|date",
+        "posts": [
+            {
+                "id": "number",
+                "content": "string",
+                "userId": "number",
+                "created_at": "string|date",
+                "updated_at": "string|date"
+            }
+        ]
+    }
+}
+```
+
+> {danger.fa-times-circle-o} Usuário não está autenticado
+
+Código `422`
+
+```json
+{
+    "success": "boolean",
+    "message": "string"
+}
+
+```
 <a name="auth"></a>
 
 ## Autenticação
@@ -128,7 +190,7 @@ Código `200`
 
 > {danger.fa-times-circle-o} E-mail ou senha invalido!
 
-Código `401`
+Código `422`
 
 ```json
 {
@@ -136,3 +198,4 @@ Código `401`
     "message": "string"
 }
 ```
+
