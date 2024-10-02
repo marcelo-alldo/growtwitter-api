@@ -179,7 +179,7 @@ Código `401`
 
 ## Fazer novo post
 
-Este método pega todos os posts dos usuários com suas relações.
+Este método cria um novo post.
 
 #### Body rules
 
