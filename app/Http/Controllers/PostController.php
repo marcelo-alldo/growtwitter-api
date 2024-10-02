@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 
 class PostController extends Controller
 {
@@ -14,14 +15,30 @@ class PostController extends Controller
 
     protected $cacheKey = 'posts_index';
 
-    public function index()
+    public function index(Request $request)
     {
 
+        if($request->query('filter') == 'following'){
+
+            $posts = DB::table('posts')
+            ->join('followers', 'posts.userId', '=', 'followers.followingId')
+            ->where('followers.followerId', $authUserId)
+            ->join('users', 'posts.userId', '=', 'users.id')
+            ->leftJoin('likes', 'posts.id', '=', 'likes.postId')
+            ->select('posts.*', 'users.name as author', 'likes.userId as liked_by')
+            ->get();
+
+        return response()->json($posts);
+
+
+            dd($posts);
+        }
+
+
+
         $posts = Cache::remember($this->cacheKey, $this->cacheDuration, function () {
-            return Post::with(['user:id,username,name,avatar_url', 'likes', 'retweets', 'comments' => function ($query) {
-                $query->with('user'); // carregar o usuário que fez o comentário
-            }])
-                ->withCount('likes', 'comments')
+            return Post::with(['user:id,username,name,avatar_url', 'likes'])
+                ->withCount('likes')
                 ->latest()
                 ->get();
         });
@@ -60,7 +77,7 @@ class PostController extends Controller
     public function show(int $id)
     {
         try {
-            $posts = Post::with(['user:id,username,name,avatar_url', 'likes', 'retweets'])
+            $posts = Post::with(['user:id,username,name,avatar_url', 'likes'])
                 ->withCount('likes')
                 ->where('userId', $id)
                 ->latest()
