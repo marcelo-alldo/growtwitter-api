@@ -57,4 +57,9 @@ class User extends Authenticatable
         return $this->hasMany(Like::class, 'userId');
     }
 
+    public function retweets()
+    {
+        return $this->hasMany(Retweet::class, 'userId');
+    }
+
 }
