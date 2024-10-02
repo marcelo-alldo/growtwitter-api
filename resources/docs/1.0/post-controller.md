@@ -1,11 +1,11 @@
 # Posts
 
-- [**Métodos Controller**](#controller)
-- [Mostrar todos os Posts](#get-posts)
-- [Mostar Post](#show-post)
-- [Fazer Post `Request`](#new-post)
-- [Editar Post `Request`](#edit-post)
-- [Excluir Post](#delete-post)
+-   [**Métodos Controller**](#controller)
+-   [Mostrar todos os Posts](#get-posts)
+-   [Mostar Post](#show-post)
+-   [Fazer Post `Request`](#new-post)
+-   [Editar Post `Request`](#edit-post)
+-   [Excluir Post](#delete-post)
 
 <a name="controller"></a>
 
@@ -31,57 +31,62 @@ Código `200`
 
 ```json
 {
-    "id": "number",
-    "content": "string",
-    "userId": "number",
-    "created_at": "string|date",
-    "updated_at": "string|date",
-    "likes_count": "number",
-    "comments_count": "number",
-    "user": {
-        "id": "number",
-        "username": "string",
-        "name": "string",
-        "avatar_url": "string|null"
-    },
-    "likes": [
+    "success": "boolean",
+    "data": [
         {
             "id": "number",
-            "userId": "number",
-            "postId": "number",
-            "created_at": "string|date",
-            "updated_at": "string|date"
-        }
-    ],
-    "retweets": [
-        {
-            "id": "number",
-            "userId": "number",
-            "postId": "number",
-            "content": "string|null",
-            "created_at": "string|date",
-            "updated_at": "string|date"
-        }
-    ],
-    "comments": [
-        {
-            "id": "number",
-            "userId": "number",
-            "postId": "number",
             "content": "string",
+            "userId": "number",
             "created_at": "string|date",
             "updated_at": "string|date",
+            "likes_count": "number",
+            "comments_count": "number",
             "user": {
                 "id": "number",
-                "name": "string",
-                "surname": "string",
-                "email": "string",
                 "username": "string",
-                "avatar_url": "string|null",
-                "email_verified_at": "string|date|null",
-                "created_at": "string|date",
-                "updated_at": "string|date"
-            }
+                "name": "string",
+                "avatar_url": "string|null"
+            },
+            "likes": [
+                {
+                    "id": "number",
+                    "userId": "number",
+                    "postId": "number",
+                    "created_at": "string|date",
+                    "updated_at": "string|date"
+                }
+            ],
+            "retweets": [
+                {
+                    "id": "number",
+                    "userId": "number",
+                    "postId": "number",
+                    "content": "string|null",
+                    "created_at": "string|date",
+                    "updated_at": "string|date"
+                }
+            ],
+            "comments": [
+                {
+                    "id": "number",
+                    "userId": "number",
+                    "postId": "number",
+                    "content": "string",
+                    "created_at": "string|date",
+                    "updated_at": "string|date",
+                    "user": {
+                        "id": "number",
+                        "name": "string",
+                        "surname": "string",
+                        "email": "string",
+                        "username": "string",
+                        "avatar_url": "string|null",
+                        "email_verified_at": "string|date|null",
+                        "created_at": "string|date",
+                        "updated_at": "string|date"
+                    }
+                }
+            ]
         }
     ]
 }
@@ -108,8 +113,8 @@ Este método pega um post pelo ID.
 
 Para pegar um post, enviar request conforme dados exemplificados abaixo.
 
-| Method |   URI    | Headers |
-| :----: | :------: | :-----: |
+| Method |       URI       | Headers |
+| :----: | :-------------: | :-----: |
 |  GET   | `/posts/postId` |  Auth   |
 
 ### Responses
@@ -120,35 +125,40 @@ Código `200`
 
 ```json
 {
-    "id": "number",
-    "content": "string",
-    "userId": "number",
-    "created_at": "string|date",
-    "updated_at": "string|date",
-    "likes_count": "number",
-    "user": {
-        "id": "number",
-        "username": "string",
-        "name": "string",
-        "avatar_url": "string|null"
-    },
-    "likes": [
+    "success": "boolean",
+    "data": [
         {
             "id": "number",
+            "content": "string",
             "userId": "number",
-            "postId": "number",
             "created_at": "string|date",
-            "updated_at": "string|date"
-        }
-    ],
-    "retweets": [
-        {
-            "id": "number",
-            "userId": "number",
-            "postId": "number",
-            "content": "string|null",
-            "created_at": "string|date",
-            "updated_at": "string|date"
+            "updated_at": "string|date",
+            "likes_count": "number",
+            "user": {
+                "id": "number",
+                "username": "string",
+                "name": "string",
+                "avatar_url": "string|null"
+            },
+            "likes": [
+                {
+                    "id": "number",
+                    "userId": "number",
+                    "postId": "number",
+                    "created_at": "string|date",
+                    "updated_at": "string|date"
+                }
+            ],
+            "retweets": [
+                {
+                    "id": "number",
+                    "userId": "number",
+                    "postId": "number",
+                    "content": "string|null",
+                    "created_at": "string|date",
+                    "updated_at": "string|date"
+                }
+            ]
         }
     ]
 }
@@ -238,7 +248,7 @@ Editar um post, enviar request conforme dados exemplificados abaixo.
 
 | Method |       URI       | Headers |
 | :----: | :-------------: | :-----: |
-|  PUT  | `/posts/postId` |  Auth   |
+|  PUT   | `/posts/postId` |  Auth   |
 
 ### Responses
 
@@ -281,7 +291,7 @@ Deletar um post, enviar request conforme dados exemplificados abaixo.
 
 | Method |       URI       | Headers |
 | :----: | :-------------: | :-----: |
-|  DELETE  | `/posts/postId` |  Auth   |
+| DELETE | `/posts/postId` |  Auth   |
 
 ### Responses
 
