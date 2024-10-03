@@ -6,3 +6,4 @@
     - [PostController](/{{route}}/{{version}}/post-controller)
     - [LikeController](/{{route}}/{{version}}/like-controller)
     - [FollowerController](/{{route}}/{{version}}/follower-controller)
+    - [RetweetController](/{{route}}/{{version}}/retweet-controller)
