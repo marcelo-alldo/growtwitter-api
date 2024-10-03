@@ -11,8 +11,10 @@ use App\Http\Controllers\UserController;
 
 use Illuminate\Support\Facades\Route;
 
-Route::post('/users', [UserController::class, 'store']);
-Route::post('/login', [AuthController::class, 'store']);
+Route::post('/users', [UserController::class, 'store']); // registrar
+
+Route::post('/login', [AuthController::class, 'store']); // logar
+
 Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('/users', UserController::class)->except('store');
     Route::delete('/logout', [AuthController::class, 'destroy']);
