@@ -17,7 +17,7 @@ Este método pega todos os likes dos usuários com suas relações.
 
 Para pegar todos os likes, enviar request conforme dados exemplificados abaixo.
 
-| Method |   URI    | Headers |
+| Method |   URL    | Headers |
 | :----: | :------: | :-----: |
 |  GET   | `/likes` |  Auth   |
 
@@ -63,7 +63,7 @@ Este método pega um Like pelo ID.
 
 Para pegar um like, enviar request conforme dados exemplificados abaixo.
 
-| Method |       URI       | Headers |
+| Method |       URL       | Headers |
 | :----: | :-------------: | :-----: |
 |  GET   | `/likes/likeId` |  Auth   |
 
@@ -116,7 +116,7 @@ Este método faz um novo like.
 
 Postar um novo like, enviar request conforme dados exemplificados abaixo.
 
-| Method |   URI    | Headers |
+| Method |   URL    | Headers |
 | :----: | :------: | :-----: |
 |  POST  | `/likes` |  Auth   |
 

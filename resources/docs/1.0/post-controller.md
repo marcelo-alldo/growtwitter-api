@@ -19,7 +19,7 @@ Este método pega todos os posts dos usuários com suas relações.
 
 Para pegar todos os posts, enviar request conforme dados exemplificados abaixo.
 
-| Method |   URI    | Headers |
+| Method |   URL    | Headers |
 | :----: | :------: | :-----: |
 |  GET   | `/posts` |  Auth   |
 
@@ -113,7 +113,7 @@ Este método pega um post pelo ID.
 
 Para pegar um post, enviar request conforme dados exemplificados abaixo.
 
-| Method |       URI       | Headers |
+| Method |       URL       | Headers |
 | :----: | :-------------: | :-----: |
 |  GET   | `/posts/postId` |  Auth   |
 
@@ -193,7 +193,7 @@ Este método cria um novo post.
 
 Postar um novo post, enviar request conforme dados exemplificados abaixo.
 
-| Method |   URI    | Headers |
+| Method |   URL    | Headers |
 | :----: | :------: | :-----: |
 |  POST  | `/posts` |  Auth   |
 
@@ -246,7 +246,7 @@ Para editar um post, enviar request conforme dados exemplificados abaixo.
 
 Editar um post, enviar request conforme dados exemplificados abaixo.
 
-| Method |       URI       | Headers |
+| Method |       URL       | Headers |
 | :----: | :-------------: | :-----: |
 |  PUT   | `/posts/postId` |  Auth   |
 
@@ -289,7 +289,7 @@ Código `401`
 
 Deletar um post, enviar request conforme dados exemplificados abaixo.
 
-| Method |       URI       | Headers |
+| Method |       URL       | Headers |
 | :----: | :-------------: | :-----: |
 | DELETE | `/posts/postId` |  Auth   |
 

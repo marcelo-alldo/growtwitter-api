@@ -17,7 +17,7 @@ Este método pega todos os follower dos usuários com suas relações.
 
 Para pegar todos os followers, enviar request conforme dados exemplificados abaixo.
 
-| Method |    URI    | Headers |
+| Method |    URL    | Headers |
 | :----: | :-------: | :-----: |
 |  GET   | `/follow` |  Auth   |
 
@@ -64,7 +64,7 @@ Este método pega um follower pelo ID.
 
 Para pegar um follower, enviar request conforme dados exemplificados abaixo.
 
-| Method |       URI        | Headers |
+| Method |       URL        | Headers |
 | :----: | :--------------: | :-----: |
 |  GET   | ` follow/postId` |  Auth   |
 
@@ -153,7 +153,7 @@ Este método segue um usuario novo.
 
 Seguir um novo usuario, enviar request conforme dados exemplificados abaixo.
 
-| Method |    URI    | Headers |
+| Method |    URL    | Headers |
 | :----: | :-------: | :-----: |
 |  POST  | ` follow` |  Auth   |
 

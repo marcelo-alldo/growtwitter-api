@@ -1,11 +1,8 @@
 # Usuários
 
--   [**Cadastro**](#sign-up)
--   [Criar conta `Request`](#request-register)
 -   [**Métodos Controller**](#get-users)
+-   [Criar conta `Request`](#request-register)
 -   [Pegar todos os Usuários](#get-user)
--   [**Autenticação**](#auth)
--   [Login `Request`](#request-login)
 
 <a name="sign-up"></a>
 
@@ -19,7 +16,7 @@ O cadastro de usuários é feito de forma independente em um serviço de autenti
 
 Para criar um novo usuário, enviar request conforme dados exemplificados abaixo.
 
-| Method |   URI    | Headers |
+| Method |   URL    | Headers |
 | :----: | :------: | :-----: |
 |  POST  | `/users` |    -    |
 
@@ -82,7 +79,7 @@ O GET de usuários é feito após o serviço de autenticação. Permitindo o cli
 
 Para criar um novo usuário, enviar request conforme dados exemplificados abaixo.
 
-| Method |   URI    | Headers |
+| Method |   URL    | Headers |
 | :----: | :------: | :-----: |
 |  GET   | `/users` |  Auth  |
 
@@ -130,72 +127,5 @@ Código `422`
 }
 
 ```
-<a name="auth"></a>
 
-## Autenticação
-
-A autenticação é realizada via tokens. Para todas as rotas protegidas devem ser enviadas em seus cabeçalhos o parâmetro:
-
-```json
-{
-    "Authorization": "Bearer {...token}"
-}
-```
-
-<a name="request-login"></a>
-
-### Endpoint (Login)
-
-o processo de login ocorre consultando o serviço de autenticação, caso os dados existam e sejam válidos, é aplicado as facades de autenticação.
-
-| Method |   URI    | Headers |
-| :----: | :------: | ------- |
-|  POST  | `/login` |
-
-#### Body rules
-
-```json
-{
-    "email": "required|email",
-    "password": "required"
-}
-```
-
-### Responses
-
-> {success.fa-check-circle-o} Login bem-sucedido
-
-Código `200`
-
-```json
-{
-    "success": "boolean",
-    "msg": "string",
-    "data": {
-        "user": {
-            "id": "number",
-            "name": "string",
-            "surname": "string",
-            "email": "string",
-            "username": "string",
-            "avatar_url": "string|null",
-            "email_verified_at": "string|null",
-            "created_at": "string|date",
-            "updated_at": "string|date"
-        },
-        "token": "string"
-    }
-}
-```
-
-> {danger.fa-times-circle-o} E-mail ou senha invalido!
-
-Código `422`
-
-```json
-{
-    "success": "boolean",
-    "message": "string"
-}
-```
 
