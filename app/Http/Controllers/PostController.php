@@ -15,33 +15,19 @@ class PostController extends Controller
 
     protected $cacheKey = 'posts_index';
 
-    public function index(Request $request)
+    public function index()
     {
-
-        if($request->query('filter') == 'following'){
-
-            $posts = DB::table('posts')
-            ->join('followers', 'posts.userId', '=', 'followers.followingId')
-            ->where('followers.followerId', $authUserId)
-            ->join('users', 'posts.userId', '=', 'users.id')
-            ->leftJoin('likes', 'posts.id', '=', 'likes.postId')
-            ->select('posts.*', 'users.name as author', 'likes.userId as liked_by')
-            ->get();
-
-        return response()->json($posts);
-
-
-            dd($posts);
-        }
 
 
 
         $posts = Cache::remember($this->cacheKey, $this->cacheDuration, function () {
-            return Post::with(['user:id,username,name,avatar_url', 'likes'])
-                ->withCount('likes')
-                ->latest()
-                ->get();
+            return Post::with(['user:id,username,name,avatar_url', 'likes', 'retweets', 'comments' => function ($query) {
+                $query->with('user'); // carregar o usuário que fez o comentário
+            }])
+            ->withCount('likes', 'comments')
+            ->latest()->get();
         });
+
 
         return response()->json(['success' => true, 'data' => $posts]);
     }
@@ -77,7 +63,7 @@ class PostController extends Controller
     public function show(int $id)
     {
         try {
-            $posts = Post::with(['user:id,username,name,avatar_url', 'likes'])
+            $posts = Post::with(['user:id,username,name,avatar_url', 'likes', 'retweets'])
                 ->withCount('likes')
                 ->where('userId', $id)
                 ->latest()
