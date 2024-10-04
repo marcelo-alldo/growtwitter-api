@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Services\AvatarService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
@@ -81,11 +82,9 @@ class UserController extends Controller
     {
         try {
             $request->validate([
-                'username' => ['nullable', 'string', 'max:30', 'min:5', 'unique:users', 'regex:/^[\w]+$/'],
-                'email' => 'nullable|email|unique:users',
                 'name' => 'nullable|string|max:255',
                 'surname' => 'nullable|string|max:255',
-                'password' => 'nullable|min:5|max:255',
+                'username' => ['nullable', 'string', 'max:30', 'min:5', 'regex:/^[\w]+$/',  Rule::unique('users')->ignore($id)],
                 'avatar_url' => 'string|nullable',
             ], [
 
@@ -103,30 +102,20 @@ class UserController extends Controller
                 'surname.string' => 'O campo sobrenome deve ser uma string.',
                 'surname.max' => 'O campo sobrenome não pode ter mais de 255 caracteres.',
 
-
-                'email.email' => 'O campo email deve ser um endereço de email válido.',
-                'email.unique' => 'Este email já está em uso.',
-                'email.max' => 'O campo email não pode ter mais de 255 caracteres.',
-
-
-                'password.min' => 'A senha deve ter pelo menos 5 caracteres.',
-
                 'avatar_url.string' => 'Avatar deve ser do tipo string.',
             ]);
+
             $user = User::findOrFail($id);
 
-            if ($request->has('name')) {
-                $user->name = $request->name;
-            }
-            if ($request->has('surname')) {
-                $user->surname = $request->surname;
-            }
-            if ($request->has('username')) {
-                $user->username = $request->username;
-            }
             if ($request->has('avatar_url')) {
                 $user->avatar_url = $request->avatar_url;
             }
+
+            $user->fill([
+                'name' => $request->name,
+                'surname' => $request->surname,
+                'username' => $request->username,
+            ]);
 
             $user->save();
 
